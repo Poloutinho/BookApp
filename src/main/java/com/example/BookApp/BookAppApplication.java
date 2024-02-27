@@ -10,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @SpringBootApplication
 public class BookAppApplication {
@@ -26,6 +27,7 @@ public class BookAppApplication {
 			@Override
 			public void run(String... args) throws Exception {
 				Book Sinderellawoman = new Book();
+				Sinderellawoman.setTitle("Sinderellawoman");
 				Sinderellawoman.setAuthor("Valera");
 				Sinderellawoman.setDescription("About woman");
 				Sinderellawoman.setCoverImage("Image");
@@ -34,7 +36,10 @@ public class BookAppApplication {
 
 				bookService.save(Sinderellawoman);
 
-				bookService.getAll();
+				List<Book> allBooks = bookService.getAllBooks();
+				for (Book book : allBooks) {
+					System.out.println(book.getTitle());
+				}
 			}
 		};
 	}
