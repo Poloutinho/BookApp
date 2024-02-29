@@ -2,14 +2,13 @@ package com.example.bookapp.src.service;
 
 import com.example.bookapp.src.dto.BookDto;
 import com.example.bookapp.src.dto.CreateBookRequestDto;
+import com.example.bookapp.src.exception.EntityNotFoundException;
 import com.example.bookapp.src.mapper.BookMapper;
 import com.example.bookapp.src.model.Book;
 import com.example.bookapp.src.repository.BookRepository;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class BookServiceImpl implements BookService {
@@ -26,10 +25,10 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    @Transactional
     public BookDto save(CreateBookRequestDto requestDto) {
         Book book = bookMapper.toModel(requestDto);
-        return bookMapper.toDto(bookRepository.save(book));
+        book = bookRepository.save(book);
+        return bookMapper.toDto(book);
     }
 
     @Override
@@ -37,5 +36,13 @@ public class BookServiceImpl implements BookService {
         return bookRepository.getAllBooks().stream()
                 .map(bookMapper::toDto)
                 .toList();
+    }
+
+    @Override
+    public BookDto findById(Long id) {
+        Book book = bookRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException("Can`t find book by id" + id)
+        );
+        return bookMapper.toDto(book);
     }
 }
