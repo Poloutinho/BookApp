@@ -4,6 +4,7 @@ import com.example.bookapp.src.dto.BookDto;
 import com.example.bookapp.src.dto.BookSearchParameters;
 import com.example.bookapp.src.dto.CreateBookRequestDto;
 import com.example.bookapp.src.service.BookService;
+import jakarta.validation.Valid;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,7 +53,7 @@ public class BookController {
     }
 
     @PostMapping
-    public BookDto save(@RequestBody CreateBookRequestDto requestDto) {
+    public BookDto save(@RequestBody @Valid CreateBookRequestDto requestDto) {
         return bookService.save(requestDto);
     }
 }
