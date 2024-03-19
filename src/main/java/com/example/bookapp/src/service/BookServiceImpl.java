@@ -1,12 +1,12 @@
 package com.example.bookapp.src.service;
 
-import com.example.bookapp.src.dto.BookDto;
-import com.example.bookapp.src.dto.BookSearchParameters;
-import com.example.bookapp.src.dto.CreateBookRequestDto;
+import com.example.bookapp.src.dto.book.BookDto;
+import com.example.bookapp.src.dto.book.BookSearchParameters;
+import com.example.bookapp.src.dto.book.CreateBookRequestDto;
 import com.example.bookapp.src.exception.EntityNotFoundException;
 import com.example.bookapp.src.mapper.BookMapper;
 import com.example.bookapp.src.model.Book;
-import com.example.bookapp.src.repository.BookRepository;
+import com.example.bookapp.src.repository.book.BookRepository;
 import com.example.bookapp.src.repository.book.BookSpecificationBuilder;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

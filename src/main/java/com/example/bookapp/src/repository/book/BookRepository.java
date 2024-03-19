@@ -1,4 +1,4 @@
-package com.example.bookapp.src.repository;
+package com.example.bookapp.src.repository.book;
 
 import com.example.bookapp.src.model.Book;
 import org.springframework.data.domain.Page;
