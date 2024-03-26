@@ -38,3 +38,9 @@ databaseChangeLog:
               - column:
                   name: shipping_address
                   type: varchar(255)
+              - column:
+                  name: roles
+                  defaultValue: USER
+                  type: varchar(255)
+                  constraints:
+                    nullable: false

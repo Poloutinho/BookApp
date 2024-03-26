@@ -1,4 +1,4 @@
-package com.example.bookapp.src.repository;
+package com.example.bookapp.src.repository.user;
 
 import com.example.bookapp.src.model.User;
 import java.util.Optional;

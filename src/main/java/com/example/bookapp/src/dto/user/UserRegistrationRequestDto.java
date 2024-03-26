@@ -1,10 +1,13 @@
 package com.example.bookapp.src.dto.user;
 
+import com.example.bookapp.src.model.User;
 import com.example.bookapp.src.validation.FieldMatch;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
+
+import java.util.Set;
 
 @Data
 @FieldMatch(
@@ -22,4 +25,8 @@ public class UserRegistrationRequestDto {
     @NotBlank
     @Length(min = 8, max = 30)
     private String repeatPassword;
+    private String firstName;
+    private String lastName;
+    private String shippingAddress;
+    private Set<User.RoleName> roles;
 }

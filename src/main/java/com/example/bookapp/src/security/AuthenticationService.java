@@ -2,7 +2,7 @@ package com.example.bookapp.src.security;
 
 import com.example.bookapp.src.dto.user.UserLoginRequestDto;
 import com.example.bookapp.src.model.User;
-import com.example.bookapp.src.repository.UserRepository;
+import com.example.bookapp.src.repository.user.UserRepository;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
