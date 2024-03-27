@@ -12,7 +12,6 @@ databaseChangeLog:
               - column: {name: first_name, value: "Bob"}
               - column: {name: last_name, value: "Bobson"}
               - column: {name: shipping_address, value: "123 Main St, City, Country"}
-              - column: {name: roles, value: ADMIN}
         - insert:
             tableName: users
             columns:
@@ -22,7 +21,6 @@ databaseChangeLog:
               - column: {name: first_name, value: "John"}
               - column: {name: last_name, value: "Johnson"}
               - column: {name: shipping_address, value: "123 Main St, City, Country"}
-              - column: {name: roles, value: USER}
         - insert:
             tableName: users
             columns:
@@ -32,4 +30,3 @@ databaseChangeLog:
               - column: {name: first_name, value: "Alice"}
               - column: {name: last_name, value: "Alison"}
               - column: {name: shipping_address, value: "123 Main St, City, Country"}
-              - column: {name: roles, value: ADMIN}

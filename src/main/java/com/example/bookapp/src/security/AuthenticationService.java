@@ -1,19 +1,26 @@
 package com.example.bookapp.src.security;
 
 import com.example.bookapp.src.dto.user.UserLoginRequestDto;
-import com.example.bookapp.src.model.User;
+import com.example.bookapp.src.dto.user.UserLoginResponseDto;
 import com.example.bookapp.src.repository.user.UserRepository;
-import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserRepository userRepository;
+    private JwtUtil jwtUtil;
+    private AuthenticationManager authenticationManager;
+    public UserLoginResponseDto authenticate(UserLoginRequestDto requestDto) {
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(requestDto.email(), requestDto.password())
+        );
 
-    public boolean authenticate(UserLoginRequestDto requestDto) {
-        Optional<User> user = userRepository.findByEmail(requestDto.email());
-        return user.isPresent() && user.get().getPassword().equals(requestDto.password());
+        String token = jwtUtil.generateToken(authentication.getName());
+        return new UserLoginResponseDto(token);
     }
 }

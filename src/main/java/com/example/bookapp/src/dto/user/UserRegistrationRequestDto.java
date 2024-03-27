@@ -4,10 +4,9 @@ import com.example.bookapp.src.model.User;
 import com.example.bookapp.src.validation.FieldMatch;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import java.util.Set;
 import lombok.Data;
 import org.hibernate.validator.constraints.Length;
-
-import java.util.Set;
 
 @Data
 @FieldMatch(

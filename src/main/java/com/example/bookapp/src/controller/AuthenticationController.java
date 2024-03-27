@@ -1,6 +1,7 @@
 package com.example.bookapp.src.controller;
 
 import com.example.bookapp.src.dto.user.UserLoginRequestDto;
+import com.example.bookapp.src.dto.user.UserLoginResponseDto;
 import com.example.bookapp.src.dto.user.UserRegistrationRequestDto;
 import com.example.bookapp.src.dto.user.UserResponseDto;
 import com.example.bookapp.src.exception.RegistrationException;
@@ -8,7 +9,6 @@ import com.example.bookapp.src.security.AuthenticationService;
 import com.example.bookapp.src.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,7 +28,7 @@ public class AuthenticationController {
     }
 
     @PostMapping("/login")
-    public boolean login(@RequestBody UserLoginRequestDto requestDto)
+    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto requestDto)
             throws RegistrationException {
         return authenticationService.authenticate(requestDto);
     }

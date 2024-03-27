@@ -18,3 +18,4 @@ databaseChangeLog:
                   type: enum ('USER','ADMIN')
                   constraints:
                     nullable: false
+                    unique: true
