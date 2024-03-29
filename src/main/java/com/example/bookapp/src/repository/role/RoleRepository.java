@@ -2,9 +2,8 @@ package com.example.bookapp.src.repository.role;
 
 import com.example.bookapp.src.model.Role;
 import com.example.bookapp.src.model.User;
-import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {
 
