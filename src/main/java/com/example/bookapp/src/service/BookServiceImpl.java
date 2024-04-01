@@ -8,6 +8,7 @@ import com.example.bookapp.src.mapper.BookMapper;
 import com.example.bookapp.src.model.Book;
 import com.example.bookapp.src.repository.book.BookRepository;
 import com.example.bookapp.src.repository.book.BookSpecificationBuilder;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -32,6 +33,18 @@ public class BookServiceImpl implements BookService {
     public List<BookDto> findAll(Pageable pageable) {
         return bookRepository.findAll(pageable).stream()
                 .map(bookMapper::toDto)
+                .toList();
+    }
+
+    @Override
+    public List<BookDto> findAllByCategoryId(Long categoryId) {
+        List<Book> booksByCategoryId = new ArrayList<>();
+        for (Book book : bookRepository.findAllByCategoriesId(categoryId)) {
+            booksByCategoryId.add(book);
+        }
+        return booksByCategoryId
+                .stream()
+                .map(book -> bookMapper.toDto(book))
                 .toList();
     }
 

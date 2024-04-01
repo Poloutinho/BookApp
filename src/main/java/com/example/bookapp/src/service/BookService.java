@@ -18,4 +18,6 @@ public interface BookService {
     List<BookDto> search(BookSearchParameters searchParameters);
 
     List<BookDto> findAll(Pageable pageable);
+
+    List<BookDto> findAllByCategoryId(Long categoryId);
 }
