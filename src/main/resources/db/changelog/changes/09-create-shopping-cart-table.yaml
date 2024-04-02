@@ -1,0 +1,19 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_shopping_cart_table
+      author: Pavlo
+      changes:
+        - createTable:
+            tableName: shopping_cart
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: user_id
+                  type: BIGINT
+                  constraints:
+                    notNull: true
