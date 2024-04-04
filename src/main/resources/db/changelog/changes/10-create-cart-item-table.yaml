@@ -8,10 +8,11 @@ databaseChangeLog:
             columns:
               - column:
                   name: id
-                  type: BIGINT
+                  type: bigint
                   autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
               - column:
                   name: shopping_cart_id
                   type: BIGINT
@@ -24,6 +25,6 @@ databaseChangeLog:
                     notNull: true
               - column:
                   name: quantity
-                  type: INT
+                  type: BIGINT
                   constraints:
                     notNull: true

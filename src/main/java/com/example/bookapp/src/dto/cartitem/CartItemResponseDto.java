@@ -3,9 +3,8 @@ package com.example.bookapp.src.dto.cartitem;
 import lombok.Data;
 
 @Data
-public class CartItemDto {
+public class CartItemResponseDto {
     private Long id;
-    private Long shoppingCartId;
     private Long bookId;
     private Long quantity;
 }

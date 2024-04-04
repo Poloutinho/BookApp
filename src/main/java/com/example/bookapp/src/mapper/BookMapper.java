@@ -18,7 +18,7 @@ import org.mapstruct.Named;
 public interface BookMapper {
     BookDto toDto(Book book);
 
-    @Mapping(target = "categories", source = "categoryIds", qualifiedByName = "categoryById")
+    @Mapping(source = "categoryIds", target = "categories", qualifiedByName = "categoryById")
     Book toModel(CreateBookRequestDto requestDto);
 
     BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
@@ -35,7 +35,7 @@ public interface BookMapper {
     @Named("bookFromId")
     default Book bookFromId(Long id) {
         if (id == null) {
-            return null; // or throw an exception, depending on your requirement
+            return null;
         }
         Book book = new Book();
         book.setId(id);

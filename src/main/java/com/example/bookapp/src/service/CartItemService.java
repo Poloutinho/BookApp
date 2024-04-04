@@ -4,5 +4,9 @@ import com.example.bookapp.src.dto.cartitem.CartItemDto;
 import com.example.bookapp.src.dto.cartitem.CreateCartItemRequestDto;
 
 public interface CartItemService {
-    CartItemDto save(CreateCartItemRequestDto categoryDto);
+    CartItemDto save(CreateCartItemRequestDto cartItemResponseDto);
+
+    CartItemDto update(Long id, CartItemDto cartItemDto);
+
+    void deleteById(Long id);
 }

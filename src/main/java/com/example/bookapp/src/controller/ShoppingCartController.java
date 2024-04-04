@@ -46,15 +46,15 @@ public class ShoppingCartController {
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @PutMapping("/cart-items/{cartItemId}")
     @Operation(summary = "Update shopping cart by Id", description = "Update shopping cart by Id")
-    public ShoppingCartDto updateShoppingCart(
-            @PathVariable Long cartItemId, @RequestBody ShoppingCartDto shoppingCartDto) {
-        return shoppingCartService.update(cartItemId, shoppingCartDto);
+    public CartItemDto updateShoppingCart(
+            @PathVariable Long cartItemId, @RequestBody CartItemDto cartItemDto) {
+        return cartItemService.update(cartItemId, cartItemDto);
     }
 
     @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("/cart-items/{cartItemId}")
     @Operation(summary = "Delete shopping cart by Id", description = "Delete shopping cart by Id")
-    public void deleteCategory(@PathVariable Long id) {
-        shoppingCartService.deleteById(id);
+    public void deleteCartItem(@PathVariable Long cartItemId) {
+        cartItemService.deleteById(cartItemId);
     }
 }
