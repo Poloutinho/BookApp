@@ -20,4 +20,9 @@ public interface UserMapper {
         user.setId(id);
         return user;
     }
+
+    @Named("idFromUser")
+    default Long idFromUser(User user) {
+        return user != null ? user.getId() : null;
+    }
 }

@@ -1,10 +1,11 @@
 package com.example.bookapp.src.dto.cartitem;
 
 import jakarta.validation.constraints.NotNull;
+import lombok.Data;
 
-public record CreateCartItemRequestDto(
-        @NotNull Long shoppingCartId,
-        @NotNull Long bookId,
-        Long quantity
-) {
+@Data
+public class CreateCartItemRequestDto {
+    @NotNull private Long shoppingCartId;
+    @NotNull private Long bookId;
+    private Long quantity;
 }

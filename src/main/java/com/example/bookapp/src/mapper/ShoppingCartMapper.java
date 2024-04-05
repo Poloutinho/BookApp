@@ -10,6 +10,7 @@ import org.mapstruct.Named;
 
 @Mapper(config = MapperConfig.class, uses = UserMapper.class)
 public interface ShoppingCartMapper {
+    @Mapping(target = "userId", source = "user", qualifiedByName = "idFromUser")
     ShoppingCartDto toDto(ShoppingCart shoppingCart);
 
     @Mapping(target = "user", source = "userId", qualifiedByName = "userFromId")

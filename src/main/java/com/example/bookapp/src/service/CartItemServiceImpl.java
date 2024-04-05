@@ -6,6 +6,7 @@ import com.example.bookapp.src.exception.EntityNotFoundException;
 import com.example.bookapp.src.mapper.CartItemMapper;
 import com.example.bookapp.src.model.CartItem;
 import com.example.bookapp.src.repository.cartitem.CartItemRepository;
+import com.example.bookapp.src.repository.shoppingcart.ShoppingCartRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 public class CartItemServiceImpl implements CartItemService {
     private final CartItemRepository cartItemRepository;
     private final CartItemMapper cartItemMapper;
+    private final ShoppingCartRepository shoppingCartRepository;
 
     @Override
     public CartItemDto save(CreateCartItemRequestDto cartItemRequestDto) {
@@ -36,6 +38,6 @@ public class CartItemServiceImpl implements CartItemService {
 
     @Override
     public void deleteById(Long id) {
-        cartItemRepository.deleteById(id);
+        cartItemRepository.delete(cartItemRepository.findById(id).get());
     }
 }
