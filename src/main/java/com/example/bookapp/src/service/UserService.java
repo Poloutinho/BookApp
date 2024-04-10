@@ -6,4 +6,6 @@ import com.example.bookapp.src.exception.RegistrationException;
 
 public interface UserService {
     UserResponseDto register(UserRegistrationRequestDto requestDto) throws RegistrationException;
+
+    UserResponseDto getByEmail(String email);
 }

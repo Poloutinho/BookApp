@@ -8,24 +8,23 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
+@Getter
+@Setter
 @Entity
-@Data
 @Table(name = "cart_item")
 public class CartItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "shopping_cart_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "shopping_cart_id")
     private ShoppingCart shoppingCart;
-
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "book_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "book_id")
     private Book book;
-
     @Column(nullable = false)
-    private Long quantity;
+    private int quantity;
 }

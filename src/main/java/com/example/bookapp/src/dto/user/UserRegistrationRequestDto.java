@@ -1,6 +1,6 @@
 package com.example.bookapp.src.dto.user;
 
-import com.example.bookapp.src.model.User;
+import com.example.bookapp.src.model.Role;
 import com.example.bookapp.src.validation.FieldMatch;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -27,5 +27,5 @@ public class UserRegistrationRequestDto {
     private String firstName;
     private String lastName;
     private String shippingAddress;
-    private Set<User.RoleName> roles;
+    private Set<Role.RoleName> roles;
 }

@@ -19,3 +19,9 @@ databaseChangeLog:
     - file: db/changelog/changes/09-create-shopping-cart-table.yaml
   - include:
     - file: db/changelog/changes/10-create-cart-item-table.yaml
+  - include:
+    - file: db/changelog/changes/11-add-cart_item_id-in-shopping-carts-table.yaml
+  - include:
+    - file: db/changelog/changes/12-add-roles-for-existing-users.yaml
+  - include:
+    - file: db/changelog/changes/13-add-shopping_carts-for-existing-users.yaml

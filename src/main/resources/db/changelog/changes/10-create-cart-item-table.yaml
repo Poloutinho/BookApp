@@ -1,6 +1,6 @@
 databaseChangeLog:
   - changeSet:
-      id: create_cart_item_table
+      id: create_cart_items_table
       author: Pavlo
       changes:
         - createTable:
@@ -15,16 +15,30 @@ databaseChangeLog:
                     nullable: false
               - column:
                   name: shopping_cart_id
-                  type: BIGINT
+                  type: bigint
                   constraints:
-                    notNull: true
+                    nullable: false
               - column:
                   name: book_id
-                  type: BIGINT
+                  type: bigint
                   constraints:
-                    notNull: true
+                    nullable: false
               - column:
                   name: quantity
-                  type: BIGINT
+                  type: integer
                   constraints:
-                    notNull: true
+                    nullable: false
+        - addForeignKeyConstraint:
+            baseTableName: cart_item
+            baseColumnNames: shopping_cart_id
+            referencedTableName: shopping_carts
+            referencedColumnNames: id
+            constraintName: fk_shopping_cart_cart_item
+            onDelete: CASCADE
+        - addForeignKeyConstraint:
+            baseTableName: cart_item
+            baseColumnNames: book_id
+            referencedTableName: books
+            referencedColumnNames: id
+            constraintName: fk_book_cart_item
+            onDelete: CASCADE

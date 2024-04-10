@@ -1,0 +1,34 @@
+databaseChangeLog:
+  - changeSet:
+      id: create_order_items_table
+      author: Pavlo
+      changes:
+        - createTable:
+            tableName: order_items
+            columns:
+              - column:
+                  name: id
+                  type: BIGINT
+                  autoIncrement: true
+                  constraints:
+                    primaryKey: true
+              - column:
+                  name: order_id
+                  type: BIGINT
+                  constraints:
+                    notNull: true
+              - column:
+                  name: book_id
+                  type: BIGINT
+                  constraints:
+                    notNull: true
+              - column:
+                  name: quantity
+                  type: BIGINT
+                  constraints:
+                    notNull: true
+              - column:
+                  name: price
+                  type: DECIMAL
+                  constraints:
+                    notNull: true

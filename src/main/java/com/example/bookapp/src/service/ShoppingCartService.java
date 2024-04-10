@@ -1,16 +1,15 @@
 package com.example.bookapp.src.service;
 
-import com.example.bookapp.src.dto.shoppingcart.CreateShoppingCartRequestDto;
+import com.example.bookapp.src.dto.shoppingcart.CartItemDto;
+import com.example.bookapp.src.dto.shoppingcart.CartItemRequestDto;
+import com.example.bookapp.src.dto.shoppingcart.CartItemRequestUpdateDto;
 import com.example.bookapp.src.dto.shoppingcart.ShoppingCartDto;
-import java.util.List;
 import org.springframework.data.domain.Pageable;
 
 public interface ShoppingCartService {
-    List<ShoppingCartDto> findAll(Pageable pageable);
+    ShoppingCartDto getShoppingCartForUser(String email, Pageable pageable);
 
-    ShoppingCartDto save(CreateShoppingCartRequestDto shoppingCartRequestDto);
+    CartItemDto save(String email, CartItemRequestDto requestDto);
 
-    ShoppingCartDto update(Long id, ShoppingCartDto shoppingCartDto);
-
-    void deleteById(Long id);
+    CartItemDto update(String email, Long id, CartItemRequestUpdateDto requestDto);
 }

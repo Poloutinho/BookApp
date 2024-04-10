@@ -1,4 +1,4 @@
-package com.example.bookapp.src.service;
+package com.example.bookapp.src.service.impl;
 
 import com.example.bookapp.src.dto.book.BookDto;
 import com.example.bookapp.src.dto.book.BookSearchParameters;
@@ -8,6 +8,7 @@ import com.example.bookapp.src.mapper.BookMapper;
 import com.example.bookapp.src.model.Book;
 import com.example.bookapp.src.repository.book.BookRepository;
 import com.example.bookapp.src.repository.book.BookSpecificationBuilder;
+import com.example.bookapp.src.service.BookService;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;

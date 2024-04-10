@@ -1,4 +1,4 @@
-package com.example.bookapp.src.service;
+package com.example.bookapp.src.service.impl;
 
 import com.example.bookapp.src.dto.category.CategoryDto;
 import com.example.bookapp.src.dto.category.CreateCategoryRequestDto;
@@ -6,6 +6,7 @@ import com.example.bookapp.src.exception.EntityNotFoundException;
 import com.example.bookapp.src.mapper.CategoryMapper;
 import com.example.bookapp.src.model.Category;
 import com.example.bookapp.src.repository.category.CategoryRepository;
+import com.example.bookapp.src.service.CategoryService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;

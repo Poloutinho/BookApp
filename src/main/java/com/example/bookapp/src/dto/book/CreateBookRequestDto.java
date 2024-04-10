@@ -11,6 +11,6 @@ public record CreateBookRequestDto(@NotNull String title,
                                    @NotNull @Min(0) BigDecimal price,
                                    String description,
                                    String coverImage,
-                                   List<Long> categoryIds
+                                   List<Long> categories
 ) {
 }

@@ -1,4 +1,4 @@
-package com.example.bookapp.src.service;
+package com.example.bookapp.src.service.impl;
 
 import com.example.bookapp.src.dto.user.UserRegistrationRequestDto;
 import com.example.bookapp.src.dto.user.UserResponseDto;
@@ -8,6 +8,7 @@ import com.example.bookapp.src.model.Role;
 import com.example.bookapp.src.model.User;
 import com.example.bookapp.src.repository.role.RoleRepository;
 import com.example.bookapp.src.repository.user.UserRepository;
+import com.example.bookapp.src.service.UserService;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -38,7 +39,7 @@ public class UserServiceImpl implements UserService {
         user.setLastName(requestDto.getLastName());
         user.setShippingAddress(requestDto.getShippingAddress());
         Set<Role> roles = new HashSet<>();
-        for (User.RoleName roleName : requestDto.getRoles()) {
+        for (Role.RoleName roleName : requestDto.getRoles()) {
             Optional<Role> existingRole = roleRepository.findByName(roleName);
             if (existingRole.isPresent()) {
                 roles.add(existingRole.get());
@@ -50,5 +51,12 @@ public class UserServiceImpl implements UserService {
         user.setRoles(roles);
         User savedUser = userRepository.save(user);
         return userMapper.toUserResponse(savedUser);
+    }
+
+    @Override
+    public UserResponseDto getByEmail(String email) {
+        return userRepository.findByEmail(email)
+                .map(userMapper::toUserResponse)
+                .orElseThrow(() -> new RuntimeException("Can't find user by email:" + email));
     }
 }

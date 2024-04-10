@@ -6,6 +6,8 @@ import com.example.bookapp.src.dto.book.BookDtoWithoutCategoryIds;
 import com.example.bookapp.src.dto.book.CreateBookRequestDto;
 import com.example.bookapp.src.model.Book;
 import com.example.bookapp.src.model.Category;
+import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.mapstruct.AfterMapping;
@@ -14,31 +16,36 @@ import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 import org.mapstruct.Named;
 
-@Mapper(config = MapperConfig.class, uses = CategoryMapper.class)
+@Mapper(config = MapperConfig.class)
 public interface BookMapper {
+    @Mapping(target = "categoryIds", ignore = true)
     BookDto toDto(Book book);
 
-    @Mapping(source = "categoryIds", target = "categories", qualifiedByName = "categoryById")
+    @Mapping(target = "categories", ignore = true)
     Book toModel(CreateBookRequestDto requestDto);
+
+    @AfterMapping
+    default void setCategories(@MappingTarget Book book, CreateBookRequestDto requestDto) {
+        Set<Category> categories = requestDto.categories().stream()
+                .map(Category::new)
+                .collect(Collectors.toSet());
+        book.setCategories(categories);
+    }
 
     BookDtoWithoutCategoryIds toDtoWithoutCategories(Book book);
 
     @AfterMapping
-    default void setCategoryIds(Book book, @MappingTarget BookDto bookDto) {
-        Set<Category> categories = book.getCategories();
-        Set<Long> categoryIds = categories.stream()
+    default void setCategoryIds(@MappingTarget BookDto bookDto, Book book) {
+        List<Long> categoriesIds = book.getCategories().stream()
                 .map(Category::getId)
-                .collect(Collectors.toSet());
-        bookDto.setCategoryIds(categoryIds);
+                .toList();
+        bookDto.setCategoryIds(categoriesIds);
     }
 
-    @Named("bookFromId")
-    default Book bookFromId(Long id) {
-        if (id == null) {
-            return null;
-        }
-        Book book = new Book();
-        book.setId(id);
-        return book;
+    @Named("bookById")
+    default Book bookById(Long id) {
+        return Optional.ofNullable(id)
+                .map(Book::new)
+                .orElse(null);
     }
 }

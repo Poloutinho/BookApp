@@ -1,12 +1,10 @@
 package com.example.bookapp.src.dto.shoppingcart;
 
-import com.example.bookapp.src.model.CartItem;
-import java.util.Set;
-import lombok.Data;
+import java.util.List;
 
-@Data
-public class ShoppingCartDto {
-    private Long id;
-    private Long userId;
-    private Set<CartItem> cartItems;
+public record ShoppingCartDto(
+        Long id,
+        Long userId,
+        List<CartItemDto> cartItems
+) {
 }
