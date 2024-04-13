@@ -38,3 +38,20 @@ databaseChangeLog:
                   type: VARCHAR(255)
                   constraints:
                     notNull: true
+              - column:
+                  name: order_item_id
+                  type: bigint
+              - addForeignKeyConstraint:
+                  baseTableName: orders
+                  baseColumnNames: user_id
+                  referencedTableName: users
+                  referencedColumnNames: id
+                  constraintName: fk_order_user
+                  onDelete: CASCADE
+              - addForeignKeyConstraint:
+                  baseTableName: orders
+                  baseColumnNames: order_item_id
+                  referencedTableName: order_items
+                  referencedColumnNames: id
+                  constraintName: fk_order_item_order
+                  onDelete: CASCADE

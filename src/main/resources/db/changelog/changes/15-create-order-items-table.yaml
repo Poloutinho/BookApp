@@ -24,7 +24,7 @@ databaseChangeLog:
                     notNull: true
               - column:
                   name: quantity
-                  type: BIGINT
+                  type: INTEGER
                   constraints:
                     notNull: true
               - column:

@@ -32,7 +32,7 @@ public class ShoppingCartController {
     @Autowired
     private CartItemService cartItemService;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @PostMapping
     @Operation(summary = "Add new shopping cart",
             description = "Add new shopping cart")
