@@ -16,15 +16,19 @@ import lombok.Setter;
 @Entity
 @Table(name = "cart_item")
 public class CartItem {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
     @ManyToOne
     @JoinColumn(name = "shopping_cart_id")
     private ShoppingCart shoppingCart;
+
     @ManyToOne
     @JoinColumn(name = "book_id")
     private Book book;
+
     @Column(nullable = false)
     private int quantity;
 }

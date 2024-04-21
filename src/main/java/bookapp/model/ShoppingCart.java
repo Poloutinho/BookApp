@@ -19,18 +19,21 @@ import org.hibernate.annotations.SQLRestriction;
 @Getter
 @Setter
 @Entity
-@SQLDelete(sql = "UPDATE books SET is_deleted = TRUE WHERE id = ?")
+@SQLDelete(sql = "UPDATE shopping_carts SET is_deleted = TRUE WHERE id = ?")
 @SQLRestriction("is_deleted = FALSE")
 @Table(name = "shopping_carts")
 public class ShoppingCart {
     @Id
     private Long id;
+
     @MapsId
     @OneToOne(optional = false)
     @JoinColumn(name = "user_id")
     private User user;
+
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "shoppingCart")
     private Set<CartItem> cartItems = new HashSet<>();
+
     @Column(name = "is_deleted",
             nullable = false)
     private boolean isDeleted;

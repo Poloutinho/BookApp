@@ -20,10 +20,14 @@ import java.util.Set;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Getter
 @Setter
+@SQLDelete(sql = "UPDATE orders SET is_deleted = TRUE WHERE id = ?")
+@SQLRestriction("is_deleted = FALSE")
 @Table(name = "orders")
 @NoArgsConstructor
 public class Order {
@@ -51,6 +55,9 @@ public class Order {
 
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "order", cascade = CascadeType.ALL)
     private Set<OrderItem> orderItems = new HashSet<>();
+
+    @Column(nullable = false)
+    private boolean isDeleted = false;
 
     public Order(ShoppingCart shoppingCart) {
         this.user = shoppingCart.getUser();
