@@ -1,15 +1,14 @@
 package bookapp.service.impl;
 
-import bookapp.exception.RegistrationException;
-import bookapp.repository.user.UserRepository;
-import bookapp.service.UserService;
 import bookapp.dto.user.UserRegistrationRequestDto;
 import bookapp.dto.user.UserResponseDto;
+import bookapp.exception.RegistrationException;
 import bookapp.mapper.UserMapper;
 import bookapp.model.Role;
 import bookapp.model.User;
 import bookapp.repository.role.RoleRepository;
-
+import bookapp.repository.user.UserRepository;
+import bookapp.service.UserService;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;

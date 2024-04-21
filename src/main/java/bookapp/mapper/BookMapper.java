@@ -1,12 +1,11 @@
 package bookapp.mapper;
 
-import bookapp.dto.book.BookDto;
-import bookapp.dto.book.CreateBookRequestDto;
-import bookapp.model.Category;
 import bookapp.config.MapperConfig;
+import bookapp.dto.book.BookDto;
 import bookapp.dto.book.BookDtoWithoutCategoryIds;
+import bookapp.dto.book.CreateBookRequestDto;
 import bookapp.model.Book;
-
+import bookapp.model.Category;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;

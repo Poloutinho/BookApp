@@ -2,7 +2,6 @@ package bookapp.service;
 
 import bookapp.dto.category.CategoryDto;
 import bookapp.dto.category.CreateCategoryRequestDto;
-
 import java.util.List;
 import org.springframework.data.domain.Pageable;
 

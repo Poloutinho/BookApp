@@ -3,7 +3,6 @@ package bookapp.repository.book;
 import bookapp.model.Book;
 import bookapp.repository.SpecificationProvider;
 import bookapp.repository.SpecificationProviderManager;
-
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

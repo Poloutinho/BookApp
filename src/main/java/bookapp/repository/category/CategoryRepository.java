@@ -1,7 +1,6 @@
 package bookapp.repository.category;
 
 import bookapp.model.Category;
-
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

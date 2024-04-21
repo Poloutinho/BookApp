@@ -2,7 +2,6 @@ package bookapp.repository.book;
 
 import bookapp.model.Book;
 import bookapp.repository.SpecificationProvider;
-
 import java.util.Arrays;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;

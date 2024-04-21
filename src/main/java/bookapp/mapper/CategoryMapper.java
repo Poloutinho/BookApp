@@ -1,9 +1,9 @@
 package bookapp.mapper;
 
-import bookapp.model.Category;
 import bookapp.config.MapperConfig;
 import bookapp.dto.category.CategoryDto;
 import bookapp.dto.category.CreateCategoryRequestDto;
+import bookapp.model.Category;
 import org.mapstruct.Mapper;
 
 @Mapper(config = MapperConfig.class)
