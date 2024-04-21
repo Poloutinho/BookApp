@@ -1,8 +1,7 @@
 package bookapp.dto.shoppingcart;
 
-import lombok.Data;
-
 import java.util.List;
+import lombok.Data;
 
 @Data
 public class ShoppingCartDto {
