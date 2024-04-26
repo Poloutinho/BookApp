@@ -3,10 +3,16 @@
 //import bookapp.dto.book.BookDto;
 //import bookapp.dto.category.CategoryDto;
 //import bookapp.dto.category.CreateCategoryRequestDto;
+//import bookapp.dto.shoppingcart.CartItemDto;
+//import bookapp.dto.shoppingcart.CartItemRequestDto;
 //import bookapp.dto.shoppingcart.ShoppingCartDto;
 //import com.fasterxml.jackson.databind.ObjectMapper;
 //import lombok.SneakyThrows;
-//import org.junit.jupiter.api.*;
+//import org.junit.jupiter.api.AfterAll;
+//import org.junit.jupiter.api.Assertions;
+//import org.junit.jupiter.api.BeforeAll;
+//import org.junit.jupiter.api.DisplayName;
+//import org.junit.jupiter.api.Test;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.boot.test.context.SpringBootTest;
 //import org.springframework.core.io.ClassPathResource;
@@ -33,10 +39,10 @@
 //@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 //public class ShoppingCartControllerTest {
 //    protected static MockMvc mockMvc;
-//    private static final String URL = "/api/categories";
+//    private static final String URL = "/api/cart";
 //
 //    private static final String SCRIPT_FOR_ADD_DATA_IN_DB =
-//            "classpath:database/add-category-to-categories-table.sql";
+//            "classpath:database/add-cart-item-to-cart-items-table.sql";
 //    private static final String SCRIPT_FOR_REMOVE_DATA_IN_DB =
 //            "classpath:database/remove-data-from-all-tables.sql";
 //    @Autowired
@@ -55,7 +61,7 @@
 //            connection.setAutoCommit(true);
 //            ScriptUtils.executeSqlScript(
 //                    connection,
-//                    new ClassPathResource("database/add-category-to-categories-table.sql")
+//                    new ClassPathResource("database/add-cart-item-to-cart-items-table.sql")
 //            );
 //        }
 //    }
@@ -80,15 +86,16 @@
 //
 //    @Test
 //    @WithMockUser(username = "admin", roles = {"ADMIN"})
-//    @DisplayName("Create a new category")
+//    @DisplayName("Create a new cart item")
 //    @Sql(scripts = SCRIPT_FOR_REMOVE_DATA_IN_DB,
 //            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-//    void createCategory_ValidRequestDto_Success() throws Exception {
-//        CreateCategoryRequestDto requestDto = createCategoryRequestDto();
-//        CategoryDto expected = new CategoryDto();
+//    void createCartItem_ValidRequestDto_Success() throws Exception {
+//        CartItemDto requestDto = createCartItemRequestDto();
+//        CartItemDto expected = new CartItemDto();
 //        expected.setId(1L);
-//        expected.setName(requestDto.getName());
-//        expected.setDescription(requestDto.getDescription());
+//        expected.setBookId(requestDto.getBookId());
+//        expected.setBookTitle(requestDto.getBookTitle());
+//        expected.setQuantity(requestDto.getQuantity());
 //        String jsonRequest = objectMapper.writeValueAsString(requestDto);
 //
 //        MvcResult mvcResult = mockMvc.perform(post(URL)
@@ -105,48 +112,30 @@
 //    }
 //
 //    @Test
-//    @WithMockUser(username = "user", roles = {"USER"})
-//    @DisplayName("Find a category by Id")
-//    @Sql(scripts = SCRIPT_FOR_ADD_DATA_IN_DB,
-//            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-//    @Sql(scripts = SCRIPT_FOR_REMOVE_DATA_IN_DB,
-//            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-//    void findCategoryById_ValidId_Success() throws Exception {
-//        MvcResult result = mockMvc.perform(get("/api/categories/1")
-//                        .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
-//                .andReturn();
-//        CategoryDto actual = objectMapper.readValue(result.getResponse()
-//                .getContentAsString(), CategoryDto.class);
-//        Assertions.assertNotNull(actual);
-//        Assertions.assertEquals("Comedy", actual.getName());
-//    }
-//
-//    @Test
 //    @WithMockUser(username = "admin", roles = {"ADMIN"})
-//    @DisplayName("Update a category by id")
+//    @DisplayName("Update a cart item by id")
 //    @Sql(scripts = SCRIPT_FOR_ADD_DATA_IN_DB,
 //            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 //    @Sql(scripts = SCRIPT_FOR_REMOVE_DATA_IN_DB,
 //            executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
-//    void updateCategory_ValidData_Success() throws Exception {
-//        Long categoryId = 1L;
-//        CreateCategoryRequestDto requestDto = createShoppingCartDto();
-//        requestDto.setDescription("Funny");
+//    void updateShoppingCart_ValidData_Success() throws Exception {
+//        Long cartItemId = 1L;
+//        CartItemDto requestDto = createCartItemRequestDto();
+//        requestDto.setQuantity(2);
 //
-//        CategoryDto expected = createCategoryDto();
-//        expected.setDescription(requestDto.getDescription());
+//        CartItemDto expected = createCartItemRequestDto();
+//        expected.setQuantity(requestDto.getQuantity());
 //
 //        String jsonRequest = objectMapper.writeValueAsString(requestDto);
 //
-//        MvcResult mvcResult = mockMvc.perform(put("/api/categories/{id}", categoryId)
+//        MvcResult mvcResult = mockMvc.perform(put("/api/categories/cart-items/1", cartItemId)
 //                        .content(jsonRequest)
 //                        .contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isOk())
 //                .andReturn();
 //
-//        CategoryDto actual = objectMapper.readValue(mvcResult.getResponse()
-//                .getContentAsString(), CategoryDto.class);
+//        CartItemDto actual = objectMapper.readValue(mvcResult.getResponse()
+//                .getContentAsString(), CartItemDto.class);
 //
 //        Assertions.assertNotNull(actual);
 //        EqualsBuilder.reflectionEquals(expected, actual, "id");
@@ -154,22 +143,19 @@
 //
 //    @Test
 //    @WithMockUser(username = "admin", roles = {"ADMIN"})
-//    @DisplayName("Delete a category by id")
+//    @DisplayName("Delete a cart item by id")
 //    void deleteCategory_ValidId_Success() throws Exception {
-//        mockMvc.perform(delete("/api/categories/1").contentType(MediaType.APPLICATION_JSON))
+//        mockMvc.perform(delete("/api/cart/cart-items/1").contentType(MediaType.APPLICATION_JSON))
 //                .andExpect(status().isNoContent())
 //                .andReturn();
 //    }
 //
-//    private ShoppingCartDto createShoppingCartDto() {
-//        ShoppingCartDto shoppingCartDto = new ShoppingCartDto();
-//        shoppingCartDto.setId(1L);
-//        shoppingCartDto.setUserId(1L);
-//        shoppingCartDto.setCartItems(
-//                List.of(
-//
-//                )
-//        );
-//        return shoppingCartDto;
+//    private CartItemDto createCartItemRequestDto() {
+//        CartItemDto cartItemDto = new CartItemDto();
+//        cartItemDto.setId(1L);
+//        cartItemDto.setBookId(1L);
+//        cartItemDto.setBookTitle("Sample");
+//        cartItemDto.setQuantity(10);
+//        return cartItemDto;
 //    }
 //}

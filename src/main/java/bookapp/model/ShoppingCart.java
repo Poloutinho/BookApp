@@ -31,11 +31,10 @@ public class ShoppingCart {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(fetch = FetchType.EAGER, mappedBy = "shoppingCart")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "shoppingCart")
     private Set<CartItem> cartItems = new HashSet<>();
 
     @Column(name = "is_deleted",
             nullable = false)
     private boolean isDeleted;
 }
-

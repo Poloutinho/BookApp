@@ -16,7 +16,6 @@ import org.mapstruct.MappingTarget;
 @Mapper(config = MapperConfig.class, uses = BookMapper.class)
 public interface ShoppingCartMapper {
     @Mapping(target = "userId", source = "user.id")
-    @Mapping(target = "cartItems", source = "cartItems")
     ShoppingCartDto toDto(ShoppingCart shoppingCart);
 
     default List<CartItemDto> mapCartItems(Set<CartItem> cartItems) {
