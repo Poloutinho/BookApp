@@ -8,7 +8,7 @@ import bookapp.model.User;
 import bookapp.service.CartItemService;
 import bookapp.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -24,9 +24,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/cart")
-@RequiredArgsConstructor
 public class ShoppingCartController {
+    @Autowired
     private ShoppingCartService shoppingCartService;
+    @Autowired
     private CartItemService cartItemService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")

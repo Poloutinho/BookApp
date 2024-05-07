@@ -9,7 +9,6 @@ import bookapp.model.Book;
 import bookapp.repository.book.BookRepository;
 import bookapp.repository.book.BookSpecificationBuilder;
 import bookapp.service.BookService;
-import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -39,10 +38,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> findAllByCategoryId(Long categoryId) {
-        List<Book> booksByCategoryId = new ArrayList<>();
-        for (Book book : bookRepository.findAllByCategoriesId(categoryId)) {
-            booksByCategoryId.add(book);
-        }
+        List<Book> booksByCategoryId = bookRepository.findAllByCategoriesId(categoryId);
         return booksByCategoryId
                 .stream()
                 .map(book -> bookMapper.toDto(book))
@@ -52,7 +48,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto findById(Long id) {
         Book book = bookRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException("Can`t find book by id" + id)
+                () -> new EntityNotFoundException("Can`t find book by id: " + id)
         );
         return bookMapper.toDto(book);
     }
@@ -60,7 +56,7 @@ public class BookServiceImpl implements BookService {
     @Override
     public BookDto updateById(Long id, BookDto updatedBookDto) {
         Book book = bookRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Book not found"));
+                .orElseThrow(() -> new EntityNotFoundException("Can`t find book by id: " + id));
 
         book.setTitle(updatedBookDto.getTitle());
         book.setAuthor(updatedBookDto.getAuthor());

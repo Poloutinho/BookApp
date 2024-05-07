@@ -5,5 +5,4 @@ public record OrderItemDto(
         Long bookId,
         Long quantity
 ) {
-
 }

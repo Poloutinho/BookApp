@@ -40,7 +40,6 @@ public class UserServiceImpl implements UserService {
         User user = new User();
         user.setEmail(requestDto.getEmail());
         user.setPassword(passwordEncoder.encode(requestDto.getPassword()));
-        user.setRepeatPassword(passwordEncoder.encode(requestDto.getRepeatPassword()));
         user.setFirstName(requestDto.getFirstName());
         user.setLastName(requestDto.getLastName());
         user.setShippingAddress(requestDto.getShippingAddress());
@@ -64,6 +63,6 @@ public class UserServiceImpl implements UserService {
         return userRepository.findByEmail(email)
                 .map(userMapper::toUserResponse)
                 .orElseThrow(() ->
-                        new EntityNotFoundException("Can't find user by email:" + email));
+                        new EntityNotFoundException("Can't find user by email: " + email));
     }
 }

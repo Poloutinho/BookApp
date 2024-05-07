@@ -42,10 +42,8 @@ public class Book {
     @Column(nullable = false)
     private BigDecimal price;
 
-    @Column
     private String description;
 
-    @Column
     private String coverImage;
 
     @ManyToMany

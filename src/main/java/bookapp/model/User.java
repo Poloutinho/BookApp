@@ -37,9 +37,6 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
-    @Column(name = "repeatPassword", nullable = false)
-    private String repeatPassword;
-
     @Column
     private String firstName;
 

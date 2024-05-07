@@ -41,7 +41,8 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto save(CreateOrderRequestDto orderRequestDto, Authentication authentication) {
         User user = (User) authentication.getPrincipal();
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(user.getId())
-                .orElseThrow(() -> new EntityNotFoundException("Can't find shopping cart"));
+                .orElseThrow(() -> new
+                        EntityNotFoundException("Can`t find shopping cart by id: " + user.getId()));
         Order order = new Order(shoppingCart);
         order.setShippingAddress(orderRequestDto.shippingAddress());
         orderRepository.save(order);
@@ -74,7 +75,8 @@ public class OrderServiceImpl implements OrderService {
         OrderItemDto orderItemDto = orderDto.orderItems().stream()
                 .filter(item -> item.id().equals(itemId))
                 .findFirst()
-                .orElseThrow(() -> new EntityNotFoundException("Order item not found"));
+                .orElseThrow(() -> new
+                        EntityNotFoundException("Order not found with id: " + orderId));
         return orderItemDto;
     }
 
@@ -82,7 +84,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDto updateOrderStatus(Long orderId, OrderUpdateRequestDto requestDto) {
         Order order = orderRepository.findById(orderId)
                 .orElseThrow(
-                        () -> new EntityNotFoundException("Can't find cart item by id: " + orderId)
+                        () -> new EntityNotFoundException("Can't find order by id: " + orderId)
                 );
         orderMapper.update(order, requestDto);
         orderRepository.save(order);

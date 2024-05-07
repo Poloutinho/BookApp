@@ -62,11 +62,15 @@ public class Order {
     public Order(ShoppingCart shoppingCart) {
         this.user = shoppingCart.getUser();
         this.status = Status.PENDING;
-        this.total = shoppingCart.getCartItems().stream()
+        this.total = calculateTotal(shoppingCart);
+        this.orderDate = LocalDateTime.now();
+    }
+
+    private BigDecimal calculateTotal(ShoppingCart shoppingCart) {
+        return shoppingCart.getCartItems().stream()
                 .map(cartItem -> cartItem.getBook().getPrice()
                         .multiply(BigDecimal.valueOf(cartItem.getQuantity())))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        this.orderDate = LocalDateTime.now();
     }
 
     public enum Status {
@@ -77,4 +81,3 @@ public class Order {
         CANCELLED
     }
 }
-

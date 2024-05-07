@@ -8,7 +8,6 @@ databaseChangeLog:
             columns:
               - column: {name: email, value: "bob@example.com"}
               - column: {name: password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}
-              - column: {name: repeat_password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}
               - column: {name: first_name, value: "Bob"}
               - column: {name: last_name, value: "Bobson"}
               - column: {name: shipping_address, value: "123 Main St, City, Country"}
@@ -17,7 +16,6 @@ databaseChangeLog:
             columns:
               - column: {name: email, value: "john@example.com"}
               - column: {name: password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}
-              - column: {name: repeat_password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}
               - column: {name: first_name, value: "John"}
               - column: {name: last_name, value: "Johnson"}
               - column: {name: shipping_address, value: "123 Main St, City, Country"}
@@ -26,7 +24,6 @@ databaseChangeLog:
             columns:
               - column: {name: email, value: "alice@example.com"}
               - column: {name: password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}
-              - column: {name: repeat_password, value: "$2a$10$waIZXwnoFUrhL/y7aFbKmO1/zfWq513UdNwXq5TPKeGuuQui.3IqC"}
               - column: {name: first_name, value: "Alice"}
               - column: {name: last_name, value: "Alison"}
               - column: {name: shipping_address, value: "123 Main St, City, Country"}
