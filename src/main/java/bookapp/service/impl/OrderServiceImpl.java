@@ -15,7 +15,9 @@ import bookapp.repository.order.OrderRepository;
 import bookapp.repository.orderitem.OrderItemRepository;
 import bookapp.repository.shoppingcart.ShoppingCartRepository;
 import bookapp.service.OrderService;
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
@@ -43,11 +45,12 @@ public class OrderServiceImpl implements OrderService {
         ShoppingCart shoppingCart = shoppingCartRepository.findByUserId(user.getId())
                 .orElseThrow(() -> new
                         EntityNotFoundException("Can`t find shopping cart by id: " + user.getId()));
-        Order order = new Order(shoppingCart);
+        BigDecimal total = calculateTotal(shoppingCart);
+        Order order = new Order(shoppingCart, total);
         order.setShippingAddress(orderRequestDto.shippingAddress());
         orderRepository.save(order);
         for (CartItem cartItem : shoppingCart.getCartItems()) {
-            OrderItem orderItem = new OrderItem(cartItem);
+            OrderItem orderItem = orderMapper.cartItemToOrderItem(cartItem);
             orderItem.setOrder(order);
             order.getOrderItems().add(orderItem);
             orderItemRepository.save(orderItem);
@@ -71,13 +74,11 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public OrderItemDto getOrderItem(Long orderId, Long itemId) {
-        OrderDto orderDto = findById(orderId);
-        OrderItemDto orderItemDto = orderDto.orderItems().stream()
-                .filter(item -> item.id().equals(itemId))
-                .findFirst()
+        Optional<OrderItemDto> orderItemDto = Optional.ofNullable(orderItemRepository
+                .findByIdAndOrderId(orderId, itemId)
                 .orElseThrow(() -> new
-                        EntityNotFoundException("Order not found with id: " + orderId));
-        return orderItemDto;
+                        EntityNotFoundException("Order not found with id: " + orderId)));
+        return orderItemDto.get();
     }
 
     @Override
@@ -89,5 +90,12 @@ public class OrderServiceImpl implements OrderService {
         orderMapper.update(order, requestDto);
         orderRepository.save(order);
         return orderMapper.toDto(order);
+    }
+
+    private BigDecimal calculateTotal(ShoppingCart shoppingCart) {
+        return shoppingCart.getCartItems().stream()
+                .map(cartItem -> cartItem.getBook().getPrice()
+                        .multiply(BigDecimal.valueOf(cartItem.getQuantity())))
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 }

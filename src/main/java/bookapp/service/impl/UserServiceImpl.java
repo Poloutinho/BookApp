@@ -51,11 +51,7 @@ public class UserServiceImpl implements UserService {
     }
 
     private Role getRole(Role.RoleName roleName) {
-        return roleRepository.findByName(roleName)
-                .orElseGet(() -> {
-                    Role newRole = new Role();
-                    return newRole;
-                });
+        return roleRepository.findByName(roleName).get();
     }
 
     @Override

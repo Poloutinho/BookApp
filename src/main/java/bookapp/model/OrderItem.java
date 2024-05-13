@@ -37,10 +37,4 @@ public class OrderItem {
 
     @Column(nullable = false)
     private BigDecimal price;
-
-    public OrderItem(CartItem cartItem) {
-        this.book = cartItem.getBook();
-        this.quantity = cartItem.getQuantity();
-        this.price = cartItem.getBook().getPrice();
-    }
 }

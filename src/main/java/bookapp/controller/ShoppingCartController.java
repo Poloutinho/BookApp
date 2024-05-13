@@ -8,7 +8,7 @@ import bookapp.model.User;
 import bookapp.service.CartItemService;
 import bookapp.service.ShoppingCartService;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
@@ -23,12 +23,11 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/cart")
 public class ShoppingCartController {
-    @Autowired
-    private ShoppingCartService shoppingCartService;
-    @Autowired
-    private CartItemService cartItemService;
+    private final ShoppingCartService shoppingCartService;
+    private final CartItemService cartItemService;
 
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @PostMapping
@@ -50,7 +49,7 @@ public class ShoppingCartController {
         return shoppingCartService.getShoppingCartForUser(user.getEmail());
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @PutMapping("/cart-items/{cartItemId}")
     @Operation(summary = "Update cart item by Id",
             description = "Update cart item by Id")
@@ -61,7 +60,7 @@ public class ShoppingCartController {
         return cartItemService.update(user.getEmail(), cartItemId, requestDto);
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_USER')")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/cart-items/{cartItemId}")
     @Operation(summary = "Delete cart item",

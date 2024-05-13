@@ -59,18 +59,11 @@ public class Order {
     @Column(nullable = false)
     private boolean isDeleted = false;
 
-    public Order(ShoppingCart shoppingCart) {
+    public Order(ShoppingCart shoppingCart, BigDecimal total) {
         this.user = shoppingCart.getUser();
         this.status = Status.PENDING;
-        this.total = calculateTotal(shoppingCart);
+        this.total = total;
         this.orderDate = LocalDateTime.now();
-    }
-
-    private BigDecimal calculateTotal(ShoppingCart shoppingCart) {
-        return shoppingCart.getCartItems().stream()
-                .map(cartItem -> cartItem.getBook().getPrice()
-                        .multiply(BigDecimal.valueOf(cartItem.getQuantity())))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public enum Status {

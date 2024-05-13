@@ -41,7 +41,7 @@ public class BookServiceImpl implements BookService {
         List<Book> booksByCategoryId = bookRepository.findAllByCategoriesId(categoryId);
         return booksByCategoryId
                 .stream()
-                .map(book -> bookMapper.toDto(book))
+                .map(bookMapper::toDto)
                 .toList();
     }
 
@@ -58,10 +58,7 @@ public class BookServiceImpl implements BookService {
         Book book = bookRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Can`t find book by id: " + id));
 
-        book.setTitle(updatedBookDto.getTitle());
-        book.setAuthor(updatedBookDto.getAuthor());
-        book.setIsbn(updatedBookDto.getIsbn());
-        book.setPrice(updatedBookDto.getPrice());
+        bookMapper.updateBookFromDto(updatedBookDto, book);
 
         bookRepository.save(book);
 

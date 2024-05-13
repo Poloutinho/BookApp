@@ -5,6 +5,7 @@ import bookapp.dto.order.CreateOrderRequestDto;
 import bookapp.dto.order.OrderDto;
 import bookapp.dto.order.OrderItemDto;
 import bookapp.dto.order.OrderUpdateRequestDto;
+import bookapp.model.CartItem;
 import bookapp.model.Order;
 import bookapp.model.OrderItem;
 import java.util.List;
@@ -26,6 +27,9 @@ public interface OrderMapper {
 
     @Mapping(target = "bookId", source = "book.id")
     OrderItemDto toOrderItemDto(OrderItem orderItem);
+
+    @Mapping(target = "price", source = "book.price")
+    OrderItem cartItemToOrderItem(CartItem cartItem);
 
     Order toModel(CreateOrderRequestDto requestDto);
 
