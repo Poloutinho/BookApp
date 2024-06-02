@@ -11,7 +11,6 @@ import bookapp.dto.category.CategoryDto;
 import bookapp.dto.category.CreateCategoryRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.sql.Connection;
-import java.sql.SQLException;
 import javax.sql.DataSource;
 import lombok.SneakyThrows;
 import org.junit.jupiter.api.AfterAll;
@@ -34,11 +33,13 @@ import org.springframework.web.context.WebApplicationContext;
 import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = "classpath:database/remove-data-from-all-tables.sql",
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class CategoryControllerTest {
     protected static MockMvc mockMvc;
     private static final String URL = "/api/categories";
 
-    private static final String SCRIPT_FOR_ADD_DATA_IN_DB =
+    private static final String SCRIPT_FOR_ADD_CATEGORY_IN_DB =
             "classpath:database/add-category-to-categories-table.sql";
     private static final String SCRIPT_FOR_REMOVE_DATA_IN_DB =
             "classpath:database/remove-data-from-all-tables.sql";
@@ -48,19 +49,11 @@ class CategoryControllerTest {
     @BeforeAll
     static void beforeAll(
             @Autowired DataSource dataSource,
-            @Autowired WebApplicationContext applicationContext
-    ) throws SQLException {
+            @Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .build();
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(
-                    connection,
-                    new ClassPathResource("database/add-category-to-categories-table.sql")
-            );
-        }
     }
 
     @AfterAll
@@ -97,7 +90,7 @@ class CategoryControllerTest {
         MvcResult mvcResult = mockMvc.perform(post(URL)
                         .content(jsonRequest)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful())
+                .andExpect(status().isCreated())
                 .andReturn();
 
         BookDto actual = objectMapper.readValue(mvcResult.getResponse()
@@ -110,7 +103,7 @@ class CategoryControllerTest {
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     @DisplayName("Find a category by Id")
-    @Sql(scripts = SCRIPT_FOR_ADD_DATA_IN_DB,
+    @Sql(scripts = SCRIPT_FOR_ADD_CATEGORY_IN_DB,
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = SCRIPT_FOR_REMOVE_DATA_IN_DB,
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
@@ -128,7 +121,7 @@ class CategoryControllerTest {
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @DisplayName("Update a category by id")
-    @Sql(scripts = SCRIPT_FOR_ADD_DATA_IN_DB,
+    @Sql(scripts = SCRIPT_FOR_ADD_CATEGORY_IN_DB,
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = SCRIPT_FOR_REMOVE_DATA_IN_DB,
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)

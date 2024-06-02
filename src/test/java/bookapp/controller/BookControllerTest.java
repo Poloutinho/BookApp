@@ -11,7 +11,6 @@ import bookapp.dto.book.CreateBookRequestDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.math.BigDecimal;
 import java.sql.Connection;
-import java.sql.SQLException;
 import java.util.List;
 import javax.sql.DataSource;
 import lombok.SneakyThrows;
@@ -35,10 +34,14 @@ import org.springframework.web.context.WebApplicationContext;
 import org.testcontainers.shaded.org.apache.commons.lang3.builder.EqualsBuilder;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@Sql(scripts = "classpath:database/remove-data-from-all-tables.sql",
+        executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 class BookControllerTest {
     protected static MockMvc mockMvc;
-    private static final String SCRIPT_FOR_ADD_DATA_IN_DB =
+    private static final String SCRIPT_FOR_ADD_BOOK_IN_DB =
             "classpath:database/add-book-to-books-table.sql";
+    private static final String SCRIPT_FOR_ADD_CATEGORY_IN_DB =
+            "classpath:database/add-category-to-categories-table.sql";
     private static final String SCRIPT_FOR_REMOVE_DATA_IN_DB =
             "classpath:database/remove-data-from-all-tables.sql";
     private static final String URL = "/api/books";
@@ -46,18 +49,13 @@ class BookControllerTest {
     private ObjectMapper objectMapper;
 
     @BeforeAll
-    static void beforeAll(@Autowired DataSource dataSource,
-                          @Autowired WebApplicationContext applicationContext
-    ) throws SQLException {
+    static void beforeAll(
+            @Autowired DataSource dataSource,
+            @Autowired WebApplicationContext applicationContext) {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(applicationContext)
                 .apply(SecurityMockMvcConfigurers.springSecurity())
                 .build();
-        try (Connection connection = dataSource.getConnection()) {
-            connection.setAutoCommit(true);
-            ScriptUtils.executeSqlScript(connection,
-                    new ClassPathResource("database/remove-data-from-all-tables.sql"));
-        }
     }
 
     @AfterAll
@@ -92,7 +90,7 @@ class BookControllerTest {
         MvcResult mvcResult = mockMvc.perform(post(URL)
                         .content(jsonRequest)
                         .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().is2xxSuccessful())
+                .andExpect(status().isCreated())
                 .andReturn();
 
         BookDto actual = objectMapper.readValue(mvcResult.getResponse()
@@ -105,7 +103,9 @@ class BookControllerTest {
     @Test
     @WithMockUser(username = "admin", roles = {"ADMIN"})
     @DisplayName("Update a book by id")
-    @Sql(scripts = SCRIPT_FOR_ADD_DATA_IN_DB,
+    @Sql(scripts = SCRIPT_FOR_ADD_BOOK_IN_DB,
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = SCRIPT_FOR_ADD_CATEGORY_IN_DB,
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = SCRIPT_FOR_REMOVE_DATA_IN_DB,
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
@@ -144,7 +144,9 @@ class BookControllerTest {
     @Test
     @WithMockUser(username = "user", roles = {"USER"})
     @DisplayName("Find a book by Id")
-    @Sql(scripts = SCRIPT_FOR_ADD_DATA_IN_DB,
+    @Sql(scripts = SCRIPT_FOR_ADD_BOOK_IN_DB,
+            executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+    @Sql(scripts = SCRIPT_FOR_ADD_CATEGORY_IN_DB,
             executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
     @Sql(scripts = SCRIPT_FOR_REMOVE_DATA_IN_DB,
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)

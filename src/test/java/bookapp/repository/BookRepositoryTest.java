@@ -14,6 +14,8 @@ import org.springframework.test.context.jdbc.Sql;
 @DataJpaTest
 @Sql(scripts = "classpath:database/add-book-to-books-table.sql",
         executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
+@Sql(scripts = "classpath:database/add-category-to-categories-table.sql",
+        executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
 @Sql(scripts = "classpath:database/remove-data-from-all-tables.sql",
         executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
