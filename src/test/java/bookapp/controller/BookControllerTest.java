@@ -79,12 +79,7 @@ class BookControllerTest {
             executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD)
     void createBook_ValidRequestDto_Success() throws Exception {
         CreateBookRequestDto requestDto = createBookRequestDto();
-        BookDto expected = new BookDto();
-        expected.setId(1L);
-        expected.setTitle(requestDto.getTitle());
-        expected.setAuthor(requestDto.getAuthor());
-        expected.setPrice(requestDto.getPrice());
-        expected.setIsbn(requestDto.getIsbn());
+        BookDto expected = createBookDto();
         String jsonRequest = objectMapper.writeValueAsString(requestDto);
 
         MvcResult mvcResult = mockMvc.perform(post(URL)
